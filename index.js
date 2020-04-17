@@ -35,7 +35,7 @@ const main = async () => {
     const folder = getInput('folder');
     const accessPolicy = getInput('public-access-policy');
     const indexFile = getInput('index-file') || 'index.html';
-    const errorFile = getInput('error-file');
+    const errorFile = getInput('error-file') || '';
     const removeExistingFiles = getInput('remove-existing-files');
 
     const blobServiceClient = await BlobServiceClient.fromConnectionString(connectionString);
@@ -45,12 +45,8 @@ const main = async () => {
 
         props.cors = props.cors || [];
         props.staticWebsite.enabled = true;
-        if(!!indexFile){
-            props.staticWebsite.indexDocument = indexFile;
-        }
-        if(!!errorFile){
-            props.staticWebsite.errorDocument404Path = errorFile;
-        }
+        props.staticWebsite.indexDocument = indexFile;
+        props.staticWebsite.errorDocument404Path = errorFile;
 
         await blobServiceClient.setProperties(props);
     }
