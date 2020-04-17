@@ -1,0 +1,19 @@
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: 'Checkout the code'
+      uses: actions/checkout@v2
+
+    - name: 'Build with node' 
+      run: |
+        npm install
+        npm run build --if-exists
+        
+    - name: 'Deploy to Static Website on Azure Blob Storage' 
+      uses: tibor19/static-website-deploy@v1
+      with:
+        enabled-static-website: 'true'
+        folder: 'build'
+        connection-string: ${{ secrets.CONNECTION_STRING }}

@@ -1,0 +1,30 @@
+{
+  "name": "static-website-deploy",
+  "version": "1.0.0",
+  "description": "With this action, you can automate your workflow to deploy files to Azure Storage Account",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "ncc build index.js -C --out lib",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tibor19/static-website-deploy.git"
+  },
+  "author": {
+    "name": "Tiberiu Covaci",
+    "url": "https://github.com/tibor19"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tibor19/static-website-deploy/issues"
+  },
+  "homepage": "https://github.com/tibor19/static-website-deploy#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@azure/storage-blob": "^12.1.1"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "0.22.1"
+  }
+}

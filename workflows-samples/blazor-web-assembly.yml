@@ -1,0 +1,25 @@
+name: .NET Core Build and Deploy
+ 
+on: [push]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 'Checkout the code'
+      uses: actions/checkout@v2
+      
+    - name: 'Build with dotnet'
+      run: dotnet build --configuration Release
+     
+    - name: 'Publish with dotnet'
+      run: dotnet publish --configuration Release -o app
+      
+    - name: Deploy to Static Website on Azure Blob Storage
+      uses: tibor19/static-website-deploy@v1
+      with:
+        enabled-static-website: 'true'
+        folder: 'app/[Blazor Project Name]/dist' # example: 'app/MyBlazorSite/dist'
+        connection-string: ${{ secrets.CONNECTION_STRING }}

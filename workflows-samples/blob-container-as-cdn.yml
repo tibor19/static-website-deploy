@@ -1,0 +1,15 @@
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: 'Checkout the code'
+      uses: actions/checkout@v2
+      
+    - name: 'Deploy to an Azure Storage container called cdn' 
+      uses: tibor19/static-website-deploy@v1
+      with:
+        folder: 'files' # All files and subfolders found in the specified folder will be uploaded.
+        connection-string: ${{ secrets.CONNECTION_STRING }}
+        public-access-policy: BlobContainer # BlobContainer | Blob | None
+        blob-container-name: 'cdn'
