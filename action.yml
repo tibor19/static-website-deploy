@@ -28,7 +28,7 @@ inputs:
     required: false
 
 branding:
-  icon: 'storage-accounts.svg'
+  icon: 'upload-cloud'
   color: blue
 runs:
   using: 'node12'
