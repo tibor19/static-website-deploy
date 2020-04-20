@@ -18,7 +18,7 @@ async function* listFiles(rootFolder){
         else if (statSync.isDirectory()){
             const files = await readdir(parentFolder); 
             for (const file of files){
-                const fileName = Path.join(parentFolder, file);
+                const fileName = path.join(parentFolder, file);
                 yield *listFilesAsync(fileName);
             }
         }
@@ -86,7 +86,7 @@ const main = async () => {
     }
 
     const rootFolder = path.resolve(folder);
-    if(fs.statSync(rootFolder.isFile())){
+    if(fs.statSync(rootFolder).isFile()){
         return await uploadFileToBlob(containerService, rootFolder, path.basename(rootFolder));
     }
     else{
