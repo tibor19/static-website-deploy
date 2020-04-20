@@ -1,22 +1,39 @@
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+const { lookup } = require('mime-types');
 
 const { getInput, setFailed } = require('@actions/core');
 const { BlobServiceClient } = require('@azure/storage-blob');
 
-const readDirAsync = promisify(fs.readdir);
+async function* listFiles(rootFolder){
 
-const listFiles = async function* (dir){
-    const files = await readDirAsync(dir);
-    for (const file of files){
-        const fileName = path.join(dir, file);
-        if(fs.statSync(fileName).isDirectory()){
-            yield *listFiles(fileName);
-        }else{
-            yield fileName;
+    const readdir = promisify(fs.readdir);
+
+    const listFilesAsync = async function* (parentFolder){
+        const statSync = fs.statSync(parentFolder);
+        if(statSync.isFile()){
+            yield parentFolder;
+        }
+        else if (statSync.isDirectory()){
+            const files = await readdir(parentFolder); 
+            for (const file of files){
+                const fileName = Path.join(parentFolder, file);
+                yield *listFilesAsync(fileName);
+            }
         }
     }
+
+    yield *listFilesAsync(rootFolder);
+}
+
+async function uploadFileToBlob(containerService, fileName, blobName){
+
+    var blobClient = containerService.getBlockBlobClient(blobName);
+    var blobContentType = lookup(fileName) || 'application/octet-stream';
+    await blobClient.uploadFile(fileName, { blobHTTPHeaders: { blobContentType } });
+
+    console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
 }
 
 const main = async () => {
@@ -51,7 +68,6 @@ const main = async () => {
         if(!!errorFile){
             props.staticWebsite.errorDocument404Path = errorFile;
         }
-
         await blobServiceClient.setProperties(props);
     }
 
@@ -70,14 +86,15 @@ const main = async () => {
     }
 
     const rootFolder = path.resolve(folder);
-
-    for await (const file of listFiles(rootFolder)) {
-        var blobName = path.relative(rootFolder, file);
-        var blobClient = containerService.getBlockBlobClient(blobName);
-        await blobClient.uploadFile(file);
-        console.log(path.relative(rootFolder, file));
+    if(fs.statSync(rootFolder.isFile())){
+        return await uploadFileToBlob(containerService, rootFolder, path.basename(rootFolder));
     }
-
+    else{
+        for await (const fileName of listFiles(rootFolder)) {
+            var blobName = path.relative(rootFolder, fileName);
+            await uploadFileToBlob(containerService, fileName, blobName);
+        }
+    }
 };
 
 main().catch(err => {
