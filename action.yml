@@ -26,10 +26,12 @@ inputs:
   remove-existing-files: 
     description: 'If the existing files should be removed before uploading the new files'
     required: false
-
+  cache-control: 
+    description: 'Set the Cache Control value for the blobs in Azure Storage'
+    required: false
 branding:
   icon: 'upload-cloud'
   color: blue
 runs:
   using: 'node12'
-  main: 'lib/index.js'
+  main: 'dist/index.js'
