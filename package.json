@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/tibor19/static-website-deploy#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@azure/storage-blob": "^12.1.1",
-    "mime-types": "^2.1.26"
+    "@actions/core": "^1.6.0",
+    "@azure/storage-blob": "^12.8.0",
+    "mime-types": "^2.1.34"
   },
   "devDependencies": {
-    "@zeit/ncc": "0.22.1"
+    "@vercel/ncc": "0.33.1"
   }
 }
