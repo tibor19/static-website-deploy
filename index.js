@@ -27,18 +27,18 @@ async function* listFiles(rootFolder){
     yield *listFilesAsync(rootFolder);
 }
 
-async function uploadFileToBlob(containerService, fileName, blobName){
+async function uploadFileToBlob(containerService, fileName, blobName, blobCacheControl){
 
     var blobClient = containerService.getBlockBlobClient(blobName);
     var blobContentType = lookup(fileName) || 'application/octet-stream';
-    await blobClient.uploadFile(fileName, { blobHTTPHeaders: { blobContentType } });
+    await blobClient.uploadFile(fileName, { blobHTTPHeaders: { blobContentType, blobCacheControl} });
 
     console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
 }
 
 const main = async () => {
 
-    const connectionString = getInput('connection-string');
+    const connectionString = getInput('connection-string', {required: true});
     if (!connectionString) {
         throw "Connection string must be specified!";
     }
@@ -54,6 +54,7 @@ const main = async () => {
     const indexFile = getInput('index-file') || 'index.html';
     const errorFile = getInput('error-file');
     const removeExistingFiles = getInput('remove-existing-files');
+    const blobCacheControl = getInput('cache-control');
 
     const blobServiceClient = await BlobServiceClient.fromConnectionString(connectionString);
 
@@ -92,7 +93,7 @@ const main = async () => {
     else{
         for await (const fileName of listFiles(rootFolder)) {
             var blobName = path.relative(rootFolder, fileName);
-            await uploadFileToBlob(containerService, fileName, blobName);
+            await uploadFileToBlob(containerService, fileName, blobName, blobCacheControl);
         }
     }
 };
