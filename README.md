@@ -11,14 +11,15 @@ With [`Azure Static Website Action`](https://github.com/tibor19/static-website-d
 
 ## Dependencies on other Github Actions
 
-* [Checkout](https://github.com/actions/checkout) Checkout your Git repository content into Github Actions agent.
+* [Checkout](https://github.com/actions/checkout) your Git repository content into Github Actions agent.
   
 ## Create Azure Storage Account and deploy static website using GitHub Actions
-1. Follow the tutorial [Azure Storage Account](https://docs.microsoft.com/es-es/learn/modules/create-azure-storage-account/5-exercise-create-a-storage-account))
-2. Copy the following example of workflow and create the workflow to `.github/workflows/` in your project repository.
-3. Change `folder` to your folder path where files to deploy are.
-4. Commit and push your project to GitHub repository, you should see a new GitHub Action initiated in **Actions** tab.
-
+1. Follow the tutorial to [Create an Azure Storage Account](https://docs.microsoft.com/es-es/learn/modules/create-azure-storage-account/5-exercise-create-a-storage-account)
+2. Create an empty workflow (`.yml` file) in the `.github/workflows/` folder of your repository.
+3. Copy the sample workflow into your workflow file.
+4. Change `MyFolder` to the relative path where your files are.
+5. Commit and push your repository.
+6. You should see a new GitHub Action started under **Actions** tab.
 
 ### Sample workflow to deploy a Static Web Site to Azure Blob Storage
 ```yaml
@@ -26,6 +27,7 @@ With [`Azure Static Website Action`](https://github.com/tibor19/static-website-d
 # File: .github/workflows/workflow.yml
 
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,8 +48,7 @@ For any credentials like Azure Service Principal, Publish Profile, Connection St
 The above example uses the Connection String of your Azure Storage Account.
 
 Follow the steps to configure the secret:
-  * Follow the tutorial [View and copy a connection string](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string#view-and-copy-a-connection-string) and copy the connection string.
-  * Define a new secret under your repository settings, Add secret menu.
+  * Follow the tutorial [View and copy a connection string](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string#view-and-copy-a-connection-string).
+  * Define a new secret as part of your repository or organization settings.
+  * Give the secret a name ex `CONNECTION_STRING`.
   * Paste the connection string file into the secret's value field.
-  * Now in the workflow file in your branch: `.github/workflows/workflow.yml` replace the secret for the input `connection-string:` of the Azure Storage Action (Refer to the example above).
-    
