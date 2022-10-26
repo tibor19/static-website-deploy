@@ -20,12 +20,16 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Install nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: 'Validate Build'
         run: |
           npm install
-          npm run build 
+          npm run build
       
       - name: 'Test Build'
         run: |
           npm test --if-exists
-           
