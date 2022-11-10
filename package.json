@@ -4,7 +4,7 @@
   "description": "With this action, you can automate your workflow to deploy files to Azure Storage Account",
   "main": "lib/index.js",
   "scripts": {
-    "build": "ncc build index.js -C --out lib",
+    "build": "ncc build index.js -C --out dist",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {

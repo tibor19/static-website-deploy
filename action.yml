@@ -32,4 +32,4 @@ branding:
   color: blue
 runs:
   using: 'node16'
-  main: 'lib/index.js'
+  main: 'dist/index.js'
