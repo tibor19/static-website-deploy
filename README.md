@@ -32,8 +32,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
-    - uses: actions/checkout@v2
-    - uses: tibor19/static-website-deploy@v1
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Deploy the website
+      uses: tibor19/static-website-deploy@v2
       with:
         enabled-static-website: 'true'
         folder: 'MyFolder'
