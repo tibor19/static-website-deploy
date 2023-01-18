@@ -56,22 +56,6 @@ const main = async () => {
     const removeExistingFiles = getInput('remove-existing-files');
     const blobCacheControl = getInput('cache-control');
 
-    // Change the accessPolicy to map the new interface
-
-    if(accessPolicy && accessPolicy.localeCompare("none", undefined, { sensitivity: 'accent' }) === 0){
-        accessPolicy = null;
-    }
-
-    if(accessPolicy){
-
-        if(accessPolicy.localeCompare("blobcontainer", undefined, { sensitivity: 'accent' }) === 0){
-            accessPolicy = 'container';
-        }
-        else if(accessPolicy.localeCompare("blob", undefined, { sensitivity: 'accent' }) === 0){
-            accessPolicy = 'blob';
-        }
-    }
-
     const blobServiceClient = await BlobServiceClient.fromConnectionString(connectionString);
 
     if (enableStaticWebSite) {
@@ -92,7 +76,7 @@ const main = async () => {
     if (!await containerService.exists()) {
         await containerService.create({ access: accessPolicy });
     }
-    else if(accessPolicy){
+    else {
         await containerService.setAccessPolicy(accessPolicy);
     }
 

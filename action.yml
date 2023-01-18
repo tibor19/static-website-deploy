@@ -12,7 +12,7 @@ inputs:
     description: 'Name of the Blob Container Storage'
     required: false
   public-access-policy: 
-    description: 'Access Policy to update in the Container (container | blob | <none>). For private containers do not specity any value.'
+    description: 'Access Policy to update in the Container (BlobContainer | Blob | None). For private containers do not specity any value.'
     required: false
   enabled-static-website:
     description: 'Enabled static website'
