@@ -7,7 +7,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: 'Deploy to Static Website on Azure Blob Storage' 
-      uses: tibor19/static-website-deploy@v1
+      uses: tibor19/static-website-deploy@v3
       with:
         enabled-static-website: 'true'
         folder: 'src' #This folder contains all files of the website for example index.html and folders css, js, assets, etc

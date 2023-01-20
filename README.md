@@ -49,8 +49,13 @@ For any credentials like Azure Service Principal, Publish Profile, Connection St
 
 The above example uses the Connection String of your Azure Storage Account.
 
-Follow the steps to configure the secret:
-  * Follow the tutorial [View and copy a connection string](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string#view-and-copy-a-connection-string).
+There are several ways to connect to your Azure Storage Account:
+* If you are using a connection string, you can use the following steps to configure the secret:
+  * Follow the tutorial [Configure Azure Storage connection strings](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string).
   * Define a new secret as part of your repository or organization settings.
   * Give the secret a name ex `CONNECTION_STRING`.
   * Paste the connection string file into the secret's value field.
+
+* If you want to use an Azure AD identity, you need call `az login`, or run the `azure/login` action prior to this step, and specify the `storage-account-name` parameter. Make sure that the Azure AD identity has the `Storage Blob Data Contributor` role on the storage account.
+
+* If you want to use a storage account key, then specify the `storage-account-name` and `storage-account-key` parameters.

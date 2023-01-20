@@ -1,8 +1,8 @@
 {
   "name": "static-website-deploy",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "With this action, you can automate your workflow to deploy files to Azure Storage Account",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js -C --out dist",
     "test": "echo \"Error: no test specified\" && exit 0"
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/tibor19/static-website-deploy#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
+    "@azure/identity": "^3.1.3",
     "@azure/storage-blob": "^12.12.0",
     "mime-types": "^2.1.35"
   },

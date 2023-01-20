@@ -7,9 +7,9 @@ jobs:
       uses: actions/checkout@v2
       
     - name: 'Deploy to an Azure Storage container called cdn' 
-      uses: tibor19/static-website-deploy@v1
+      uses: tibor19/static-website-deploy@v3
       with:
         folder: 'files' # All files and subfolders found in the specified folder will be uploaded.
         connection-string: ${{ secrets.CONNECTION_STRING }}
-        public-access-policy: BlobContainer # BlobContainer | Blob | None
+        public-access-policy: container # container | blob | <none>
         blob-container-name: 'cdn'

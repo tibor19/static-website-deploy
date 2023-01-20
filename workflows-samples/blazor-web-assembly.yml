@@ -18,7 +18,7 @@ jobs:
       run: dotnet publish --configuration Release -o app
       
     - name: Deploy to Static Website on Azure Blob Storage
-      uses: tibor19/static-website-deploy@v1
+      uses: tibor19/static-website-deploy@v3
       with:
         enabled-static-website: 'true'
         folder: 'app/[Blazor Project Name]/dist' # example: 'app/MyBlazorSite/dist'

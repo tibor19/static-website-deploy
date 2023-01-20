@@ -1,10 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const { lookup } = require('mime-types');
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
+import { lookup } from 'mime-types';
 
-const { getInput, setFailed } = require('@actions/core');
-const { BlobServiceClient } = require('@azure/storage-blob');
+import { getInput, setFailed } from '@actions/core';
+import { BlobServiceClient } from '@azure/storage-blob';
+import { DefaultAzureCredential } from '@azure/identity';
 
 async function* listFiles(rootFolder){
 
@@ -38,9 +39,23 @@ async function uploadFileToBlob(containerService, fileName, blobName, blobCacheC
 
 const main = async () => {
 
-    const connectionString = getInput('connection-string', {required: true});
-    if (!connectionString) {
-        throw "Connection string must be specified!";
+    let blobServiceClient = null;
+    const storageAccountName = getInput('storage-account-name');
+    const connectionString = getInput('connection-string');
+
+    if (!storageAccountName && !connectionString) {
+        throw "storage-account-name or connection-string must be specified!";
+    }
+
+    if (!!connectionString) {
+        blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+    }
+    else {
+        const storageAccountKey = getInput('storage-account-key');
+        // no storage account key, use managed identity
+        blobServiceClient = new BlobServiceClient(`https://${storageAccountName}.blob.core.windows.net`, 
+            storageAccountKey || new DefaultAzureCredential()
+        );
     }
 
     const enableStaticWebSite = getInput('enabled-static-website');
@@ -63,7 +78,6 @@ const main = async () => {
     }
 
     if(accessPolicy){
-
         if(accessPolicy.localeCompare("blobcontainer", undefined, { sensitivity: 'accent' }) === 0){
             accessPolicy = 'container';
         }
@@ -71,8 +85,6 @@ const main = async () => {
             accessPolicy = 'blob';
         }
     }
-
-    const blobServiceClient = await BlobServiceClient.fromConnectionString(connectionString);
 
     if (enableStaticWebSite) {
         var props = await blobServiceClient.getProperties();

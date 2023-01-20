@@ -12,7 +12,7 @@ jobs:
         npm run build --if-exists
         
     - name: 'Deploy to Static Website on Azure Blob Storage' 
-      uses: tibor19/static-website-deploy@v1
+      uses: tibor19/static-website-deploy@v3
       with:
         enabled-static-website: 'true'
         folder: 'build'
