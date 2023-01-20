@@ -99823,7 +99823,7 @@ async function uploadFileToBlob(containerService, fileName, blobName, blobCacheC
     var blobContentType = (0,mime_types__WEBPACK_IMPORTED_MODULE_3__.lookup)(fileName) || 'application/octet-stream';
     await blobClient.uploadFile(fileName, { blobHTTPHeaders: { blobContentType, blobCacheControl} });
 
-    console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__.debug)(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
 }
 
 const main = async () => {
@@ -99916,8 +99916,8 @@ const main = async () => {
 };
 
 main().catch(err => {
-    console.error(err);
-    console.error(err.stack);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__.error)(err);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__.error)(err.stack);
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__.setFailed)(err);
     process.exit(-1);
 })
