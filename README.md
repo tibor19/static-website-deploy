@@ -56,6 +56,6 @@ There are several ways to connect to your Azure Storage Account:
   * Give the secret a name ex `CONNECTION_STRING`.
   * Paste the connection string file into the secret's value field.
 
-* If you want to use an Azure AD identity, you need call `az login`, or run the `azure/login` action prior to this step, and specify the `storage-account-name` parameter. Make sure that the Azure AD identity has the `Storage Blob Data Contributor` role on the storage account.
+* If you want to use an Azure AD identity, you need call `az login`, or run the `azure/login` action prior to this step, and specify the `storage-account-name` parameter. Make sure that the Azure AD identity has the `Storage Account Contributor` and `Storage Blob Data Contributor` roles on the storage account.
 
 * If you want to use a storage account key, then specify the `storage-account-name` and `storage-account-key` parameters.
