@@ -32,7 +32,7 @@ inputs:
     description: 'If the existing files should be removed before uploading the new files'
     required: false
   cache-control:
-    description: 'Sets each blob's cache control.'
+    description: 'Sets each blobs cache control.'
     required: false
     
   folder:
