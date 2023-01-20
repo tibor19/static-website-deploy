@@ -1,13 +1,18 @@
 name: 'Azure Static Website'
 description: 'Deploy files to Azure Blob Storage Container using a connection string'
 inputs:
+
+  storage-account-name:
+    description: 'The name of the Azure Storage Account. Make sure to call az login before this step, or provide a value for storage-account-key'
+    required: false
+  storage-account-key:
+    description: 'One of the two shared keys of the storage account'
+    required: false
+
   connection-string:
     description: 'Connection String of the Azure Storage Container'
-    required: true
-  folder:
-    description: 'Folder containing the files to be uploaded to the Storage Container'
     required: false
-    default: '.'
+
   blob-container-name:
     description: 'Name of the Blob Container Storage'
     required: false
@@ -26,6 +31,11 @@ inputs:
   remove-existing-files:
     description: 'If the existing files should be removed before uploading the new files'
     required: false
+
+  folder:
+    description: 'Folder containing the files to be uploaded to the Storage Container'
+    required: false
+    default: '.'
 
 branding:
   icon: 'upload-cloud'
