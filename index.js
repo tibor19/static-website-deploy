@@ -3,7 +3,7 @@ import path from 'path';
 import { promisify } from 'util';
 import { lookup } from 'mime-types';
 
-import { getInput, setFailed } from '@actions/core';
+import { getInput, setFailed, debug, error } from '@actions/core';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { DefaultAzureCredential } from '@azure/identity';
 
@@ -34,7 +34,7 @@ async function uploadFileToBlob(containerService, fileName, blobName, blobCacheC
     var blobContentType = lookup(fileName) || 'application/octet-stream';
     await blobClient.uploadFile(fileName, { blobHTTPHeaders: { blobContentType, blobCacheControl} });
 
-    console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
+    debug(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType}`);
 }
 
 const main = async () => {
@@ -127,8 +127,8 @@ const main = async () => {
 };
 
 main().catch(err => {
-    console.error(err);
-    console.error(err.stack);
+    error(err);
+    error(err.stack);
     setFailed(err);
     process.exit(-1);
 })
